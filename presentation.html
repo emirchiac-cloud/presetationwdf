@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Offcanvas Demo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <h1>Offcanvas Demo</h1>
+        <p>A lightweight, premium implementation of the Bootstrap offcanvas component. Works with links and buttons.</p>
+
+        <div class="button-group">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample">
+                Button with target
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="offcanvas-backdrop"></div>
+
+    <!-- Offcanvas Element -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Exclusive Insights</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas">×</button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <p>Welcome to your sidebar! This premium design uses glassmorphism and smooth transitions to provide a
+                    modern feel.</p>
+                <p>You can include anything here: forms, navigation links, or even a mini dashboard.</p>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backdrop = document.getElementById('backdrop');
+            const offcanvas = document.getElementById('offcanvasExample');
+
+            // Toggle function
+            const toggleOffcanvas = (show) => {
+                if (show) {
+                    offcanvas.classList.add('show');
+                    backdrop.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    offcanvas.classList.remove('show');
+                    backdrop.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            };
+
+            // Trigger buttons
+            document.querySelectorAll('[data-bs-toggle="offcanvas"]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Get target from href or data-bs-target
+                    const targetId = btn.getAttribute('data-bs-target') || btn.getAttribute('href');
+                    if (targetId === '#offcanvasExample') {
+                        toggleOffcanvas(true);
+                    }
+                });
+            });
+
+            // Dismiss buttons
+            document.querySelectorAll('[data-bs-dismiss="offcanvas"]').forEach(btn => {
+                btn.addEventListener('click', () => toggleOffcanvas(false));
+            });
+
+            // Backdrop click
+            backdrop.addEventListener('click', () => toggleOffcanvas(false));
+
+
+        });
+    </script>
+</body>
+
+</html>

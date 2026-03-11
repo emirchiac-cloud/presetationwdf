@@ -1,0 +1,192 @@
+/* 
+PROJECT COMPONENT OVERVIEW
+ 
+  1. .offcanvas:     The base container for the sidebar. It uses glassmorphism (backdrop-filter)
+                   and fixed positioning to stay on top of the content.
+  2. .offcanvas-start: Positions the sidebar on the left edge and hides it using 
+                    translateX(-100%) for a smooth slide-in animation.
+  3. .offcanvas.show: The active state that triggers the slide-in by resetting the transform.
+  4. .offcanvas-backdrop: A full-screen overlay that blurs the background content, 
+                    creating depth and focusing attention on the active sidebar.
+ 5. .dropdown-menu:  A hidden absolute-positioned menu that appears below buttons 
+                    when toggled with the .show class.
+ 6. .btn-primary:    Custom-styled buttons with smooth hover transitions and 
+                    subtle shadows for a premium feel.
+ */
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: var(--text-main);
+    margin: 0;
+    display: block;
+    padding: 2rem;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    z-index: 1;
+    margin: 0 auto;
+}
+
+h1 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--primary), #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    /* High-emphasis button with primary brand color and soft shadow */
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.5);
+}
+
+.btn-secondary {
+    background-color: #f1f5f9;
+    color: var(--text-main);
+}
+
+.btn-secondary:hover {
+    background-color: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+/* --- Offcanvas Styles --- */
+.offcanvas {
+    /* Main sidebar container using glassmorphism and fixed positioning */
+    position: fixed;
+    bottom: 0;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-clip: padding-box;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    transition: transform 0.35s ease-in-out;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+}
+
+.offcanvas-start {
+    /* Locks sidebar to left and hides it off-screen via transform */
+    top: 0;
+    left: 0;
+    width: 400px;
+    transform: translateX(-100%);
+}
+
+.offcanvas.show {
+    /* Triggers the slide-in animation by resetting the transform */
+    transform: none;
+}
+
+.offcanvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.offcanvas-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    line-height: 1;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.btn-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-main);
+}
+
+.offcanvas-body {
+    flex-grow: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+/* Backdrop */
+.offcanvas-backdrop {
+    /* Semi-transparent blurred overlay to focus attention on sidebar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.offcanvas-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
